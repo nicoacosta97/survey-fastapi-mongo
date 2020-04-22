@@ -1,0 +1,26 @@
+stages:
+  - build
+
+variables:
+  GIT_STRATEGY: fetch
+  CONTAINER_TEST_IMAGE: $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME
+  CONTAINER_RELEASE_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+
+before_script:
+  - 'echo Environment for branch= ${CI_BUILD_REF_NAME} - commit= ${CI_BUILD_REF}'
+  - export | grep "declare -x CI_"
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+  - docker -v
+
+artifact-generation:
+  stage: build
+  script:
+    - docker build -f "Dockerfile" -t $CONTAINER_TEST_IMAGE --build-arg TOKEN=$CI_BUILD_TOKEN --build-arg BRANCH=$CI_COMMIT_REF_NAME .
+    - docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_IMAGE
+    - docker push $CONTAINER_RELEASE_IMAGE
+
+  only:
+    - branches
+  tags:
+    - ssh-multirunner
+

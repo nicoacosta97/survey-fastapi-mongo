@@ -1,0 +1,5 @@
+/src/*.log
+/src/views/uploader.sublime-workspace
+/src/venv
+/src/.idea
+*.pyc
