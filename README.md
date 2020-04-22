@@ -13,8 +13,8 @@
 docker-compose up -d
 ```
 
-#Una vez realizados estos pasos podra ver los servicios corriendo:
+# Una vez realizados estos pasos podrá ver los servicios corriendo:
 
-###[Encuesta](localhost:8080)
+### [Encuesta](localhost:8080)
 
-###[Administracion de base de datos](localhost:8081)
+### [Administracion de base de datos](localhost:8081)
